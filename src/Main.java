@@ -1,36 +1,52 @@
 abstract class Logistics{
     String name;
+    public String toString(){
+        return "Тип транспортировки: "+this.name;
+    }
 }
-abstract class Factory{
-    public abstract Logistics createLogistic();
+abstract class LogisticsFactory{
+    public abstract Logistics createLog();
 }
-class TruckFactory extends Factory{
-    public Logistics createLogistic(){
+class AirLog extends LogisticsFactory {
+    public Logistics createLog() {
+        return new Airplane();
+    }
+}
+class ShipLog extends LogisticsFactory{
+    public Logistics createLog(){
+        return new Ship();
+    }
+}
+class TruckLog extends LogisticsFactory{
+    public Logistics createLog(){
         return new Truck();
     }
 }
-class BoatFactory extends Factory{
-    public Logistics createLogistic(){
-        return new Boat();
+class Airplane extends Logistics{
+    public Airplane(){
+        name="Самолёт";
     }
 }
-class PlaneFactory extends Factory{
-    public Logistics createLogistic(){
-        return new Plane();
+class Ship extends Logistics{
+    public Ship(){
+        name="Корабль";
     }
 }
-
 class Truck extends Logistics{
-    String name="Truck";
-}
-class Boat extends Logistics{
-    String name="Boat";
-}
-class Plane extends Logistics{
-    String name="Plane";
+    public Truck(){
+        name="Грузовик";
+    }
 }
 public class Main {
     public static void main(String[] args) {
-
+        LogisticsFactory sea = new ShipLog();
+        LogisticsFactory air = new AirLog();
+        LogisticsFactory truck = new TruckLog();
+        Logistics myplane = air.createLog();
+        Logistics myship = sea.createLog();
+        Logistics mytruck = truck.createLog();
+        System.out.println(myplane.toString());
+        System.out.println(myship.toString());
+        System.out.println(mytruck.toString());
     }
 }
